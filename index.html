@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,180 +8,165 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      --bg: #f9f9f8;
+      --bg2: #f2f1ef;
+      --bg3: #eae9e6;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.14);
+      --text: #111110;
+      --muted: #666;
+      --accent: #5b4ef8;
+      --accent2: #5b4ef8;
+      --teal: #0d9488;
+      --nav-bg: rgba(249,249,248,0.9);
+      --toggle-bg: #ddd;
+      --shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    [data-theme="dark"] {
       --bg: #0d0d0d;
       --bg2: #131313;
       --bg3: #1a1a1a;
       --card: #161616;
       --border: rgba(255,255,255,0.07);
-      --border2: rgba(255,255,255,0.12);
+      --border2: rgba(255,255,255,0.13);
       --text: #f0f0f0;
       --muted: #888;
       --accent: #7c6af7;
       --accent2: #a78bfa;
       --teal: #2dd4bf;
-      --green: #4ade80;
+      --nav-bg: rgba(13,13,13,0.9);
+      --toggle-bg: #333;
+      --shadow: none;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg); color: var(--text);
       font-family: 'Inter', system-ui, sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: 15px; line-height: 1.7;
+      transition: background 0.3s, color 0.3s;
     }
-
     a { color: var(--accent2); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(13,13,13,0.85);
-      backdrop-filter: blur(12px);
+      background: var(--nav-bg); backdrop-filter: blur(14px);
       border-bottom: 0.5px solid var(--border);
       display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem; height: 56px;
+      padding: 0 2rem; height: 56px; transition: background 0.3s;
     }
     .nav-brand { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.3px; }
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
     .nav-links { display: flex; gap: 1.75rem; }
     .nav-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); text-decoration: none; }
 
-    /* HERO */
+    .theme-btn {
+      background: var(--toggle-bg); border: none; cursor: pointer;
+      width: 46px; height: 25px; border-radius: 100px; position: relative;
+      transition: background 0.3s; flex-shrink: 0;
+    }
+    .theme-btn::after {
+      content: ''; position: absolute; top: 3.5px; left: 3.5px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; transition: transform 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    [data-theme="dark"] .theme-btn::after { transform: translateX(21px); background: #222; }
+    .theme-btn .ico { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; line-height: 1; pointer-events: none; }
+    .theme-btn .ico-sun { left: 5px; }
+    .theme-btn .ico-moon { right: 4px; }
+
     .hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 5rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 5rem 2rem 4rem; position: relative; overflow: hidden;
     }
     .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(124,106,247,0.12) 0%, transparent 70%);
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(91,78,248,0.07) 0%, transparent 70%);
       pointer-events: none;
     }
     .hero-inner { position: relative; max-width: 720px; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(124,106,247,0.1); border: 0.5px solid rgba(124,106,247,0.3);
+      background: rgba(91,78,248,0.08); border: 0.5px solid rgba(91,78,248,0.25);
       border-radius: 100px; padding: 4px 14px; font-size: 12px; color: var(--accent2);
       margin-bottom: 1.5rem; letter-spacing: 0.3px;
     }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
     .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -1px; line-height: 1.15; margin-bottom: 1rem; }
     .hero h1 span { color: var(--accent2); }
     .hero p { font-size: 1rem; color: var(--muted); max-width: 560px; margin: 0 auto 2rem; line-height: 1.75; }
     .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      padding: 10px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer;
-      transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
-    }
+    .btn { padding: 10px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
     .btn-primary { background: var(--accent); color: #fff; border: none; }
-    .btn-primary:hover { background: #6b5ce7; text-decoration: none; }
+    .btn-primary:hover { opacity: 0.88; text-decoration: none; }
     .btn-outline { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
     .btn-outline:hover { background: var(--bg3); text-decoration: none; }
     .hero-contacts { margin-top: 2.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
     .hero-contacts a { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
     .hero-contacts a:hover { color: var(--text); text-decoration: none; }
 
-    /* SECTIONS */
     section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
     .section-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.5rem; }
     .section-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 2.5rem; }
     .divider { border: none; border-top: 0.5px solid var(--border); margin: 0; }
 
-    /* ABOUT */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .about-card {
-      background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem;
-    }
+    .about-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
     .about-card h4 { font-size: 13px; color: var(--muted); margin-bottom: 0.4rem; font-weight: 400; }
     .about-card p { font-size: 15px; font-weight: 500; }
     .about-bio { grid-column: 1 / -1; }
-    .about-bio p { color: var(--muted); line-height: 1.8; }
+    .about-bio p { color: var(--muted); line-height: 1.8; font-weight: 400; }
 
-    /* SKILLS */
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-    .skill-group {
-      background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem;
-    }
+    .skill-group { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
     .skill-group h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent2); margin-bottom: 0.75rem; font-weight: 600; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag {
-      background: rgba(255,255,255,0.05); border: 0.5px solid var(--border2);
-      border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--text);
-    }
+    .tag { background: var(--bg2); border: 0.5px solid var(--border2); border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--text); }
 
-    /* EXPERIENCE */
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-    .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 2rem; position: relative; padding-bottom: 2.5rem; }
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 2rem; padding-bottom: 2.5rem; }
     .timeline-item:last-child { padding-bottom: 0; }
     .timeline-date { font-size: 12px; color: var(--muted); padding-top: 4px; text-align: right; line-height: 1.5; }
     .timeline-body { border-left: 0.5px solid var(--border2); padding-left: 1.5rem; position: relative; }
-    .timeline-body::before {
-      content: ''; position: absolute; left: -5px; top: 6px;
-      width: 9px; height: 9px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg);
-    }
+    .timeline-body::before { content: ''; position: absolute; left: -5px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
     .timeline-body h3 { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
     .timeline-body .company { font-size: 13px; color: var(--teal); margin-bottom: 0.75rem; }
     .timeline-body ul { list-style: none; padding: 0; }
     .timeline-body ul li { font-size: 13.5px; color: var(--muted); margin-bottom: 6px; padding-left: 1rem; position: relative; line-height: 1.6; }
     .timeline-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
 
-    /* PROJECTS */
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
-    .project-card {
-      background: var(--card); border: 0.5px solid var(--border); border-radius: 12px;
-      padding: 1.25rem 1.5rem; transition: border-color 0.2s;
-    }
-    .project-card:hover { border-color: var(--border2); }
+    .project-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; transition: border-color 0.2s; box-shadow: var(--shadow); }
+    .project-card:hover { border-color: var(--accent2); }
     .project-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
     .project-card p { font-size: 12.5px; color: var(--muted); line-height: 1.65; margin-bottom: 0.75rem; }
     .project-stack { display: flex; flex-wrap: wrap; gap: 4px; }
-    .stack-tag {
-      background: rgba(124,106,247,0.1); border: 0.5px solid rgba(124,106,247,0.25);
-      border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--accent2);
-    }
+    .stack-tag { background: rgba(91,78,248,0.08); border: 0.5px solid rgba(91,78,248,0.2); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--accent2); }
 
-    /* EDUCATION */
     .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .edu-card {
-      background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem;
-    }
+    .edu-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
     .edu-card .year { font-size: 12px; color: var(--teal); margin-bottom: 0.25rem; }
     .edu-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.25rem; }
     .edu-card p { font-size: 13px; color: var(--muted); }
 
-    /* CONTACT */
     .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-    .contact-card {
-      background: var(--card); border: 0.5px solid var(--border); border-radius: 12px;
-      padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 12px;
-      transition: border-color 0.2s;
-    }
-    .contact-card:hover { border-color: var(--border2); }
-    .contact-icon {
-      width: 36px; height: 36px; border-radius: 8px; background: rgba(124,106,247,0.12);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px;
-    }
-    .contact-card h4 { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+    .contact-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s; box-shadow: var(--shadow); }
+    .contact-card:hover { border-color: var(--accent2); }
+    .contact-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(91,78,248,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+    .contact-card h4 { font-size: 12px; color: var(--muted); margin-bottom: 2px; font-weight: 400; }
     .contact-card p { font-size: 13px; font-weight: 500; word-break: break-all; }
 
-    /* FOOTER */
-    footer {
-      border-top: 0.5px solid var(--border); text-align: center;
-      padding: 2rem; font-size: 12px; color: var(--muted);
-    }
+    footer { border-top: 0.5px solid var(--border); text-align: center; padding: 2rem; font-size: 12px; color: var(--muted); }
 
-    /* RESPONSIVE */
     @media (max-width: 640px) {
       nav { padding: 0 1rem; }
-      .nav-links { gap: 1rem; }
+      .nav-links { display: none; }
       .about-grid, .edu-grid { grid-template-columns: 1fr; }
       .timeline-item { grid-template-columns: 1fr; gap: 0.25rem; }
       .timeline-date { text-align: left; }
@@ -192,16 +177,21 @@
 
   <nav>
     <span class="nav-brand">Debendra Mahilang</span>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <span class="ico ico-sun">☀️</span>
+        <span class="ico ico-moon">🌙</span>
+      </button>
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-badge"><span class="dot"></span> Open to new opportunities</div>
@@ -221,87 +211,39 @@
 
   <hr class="divider" />
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-label">About me</div>
     <div class="section-title">Who I am</div>
     <div class="about-grid">
-      <div class="about-card about-bio">
-        <p>Results-driven Software Engineer architecting scalable microservices and intelligent automation systems. I specialize in eliminating repetitive enterprise operations through AI integration — transforming CRM/ERP workflows into self-operating, intelligent pipelines that drive measurable business efficiency.</p>
-      </div>
-      <div class="about-card">
-        <h4>Location</h4>
-        <p>Bhubaneswar, Odisha</p>
-      </div>
-      <div class="about-card">
-        <h4>Experience</h4>
-        <p>5+ Years</p>
-      </div>
-      <div class="about-card">
-        <h4>Focus area</h4>
-        <p>Back-end & Generative AI</p>
-      </div>
-      <div class="about-card">
-        <h4>Languages</h4>
-        <p>English, Hindi, Odia</p>
-      </div>
+      <div class="about-card about-bio"><p>Results-driven Software Engineer architecting scalable microservices and intelligent automation systems. I specialize in eliminating repetitive enterprise operations through AI integration — transforming CRM/ERP workflows into self-operating, intelligent pipelines that drive measurable business efficiency.</p></div>
+      <div class="about-card"><h4>Location</h4><p>Bhubaneswar, Odisha</p></div>
+      <div class="about-card"><h4>Experience</h4><p>5+ Years</p></div>
+      <div class="about-card"><h4>Focus area</h4><p>Back-end & Generative AI</p></div>
+      <div class="about-card"><h4>Languages</h4><p>English, Hindi, Odia</p></div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- SKILLS -->
   <section id="skills">
     <div class="section-label">Technical skills</div>
     <div class="section-title">What I work with</div>
     <div class="skills-grid">
-      <div class="skill-group">
-        <h4>Back-end</h4>
-        <div class="skill-tags">
-          <span class="tag">Node.js</span><span class="tag">PHP (CodeIgniter)</span><span class="tag">REST APIs</span><span class="tag">Microservices</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Front-end</h4>
-        <div class="skill-tags">
-          <span class="tag">React.js</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>AI & Generative</h4>
-        <div class="skill-tags">
-          <span class="tag">OpenAI GPT</span><span class="tag">Prompt Engineering</span><span class="tag">DALL·E</span><span class="tag">Hugging Face</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Automation</h4>
-        <div class="skill-tags">
-          <span class="tag">n8n</span><span class="tag">Zapier</span><span class="tag">Make.com</span><span class="tag">Webhooks</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Integrations</h4>
-        <div class="skill-tags">
-          <span class="tag">WhatsApp API</span><span class="tag">Instagram API</span><span class="tag">Gmail API</span><span class="tag">Google Calendar</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>DevOps & DB</h4>
-        <div class="skill-tags">
-          <span class="tag">MySQL</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Postman</span>
-        </div>
-      </div>
+      <div class="skill-group"><h4>Back-end</h4><div class="skill-tags"><span class="tag">Node.js</span><span class="tag">PHP (CodeIgniter)</span><span class="tag">REST APIs</span><span class="tag">Microservices</span></div></div>
+      <div class="skill-group"><h4>Front-end</h4><div class="skill-tags"><span class="tag">React.js</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div></div>
+      <div class="skill-group"><h4>AI & Generative</h4><div class="skill-tags"><span class="tag">OpenAI GPT</span><span class="tag">Prompt Engineering</span><span class="tag">DALL·E</span><span class="tag">Hugging Face</span></div></div>
+      <div class="skill-group"><h4>Automation</h4><div class="skill-tags"><span class="tag">n8n</span><span class="tag">Zapier</span><span class="tag">Make.com</span><span class="tag">Webhooks</span></div></div>
+      <div class="skill-group"><h4>Integrations</h4><div class="skill-tags"><span class="tag">WhatsApp API</span><span class="tag">Instagram API</span><span class="tag">Gmail API</span><span class="tag">Google Calendar</span></div></div>
+      <div class="skill-group"><h4>DevOps & DB</h4><div class="skill-tags"><span class="tag">MySQL</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Postman</span></div></div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- EXPERIENCE -->
   <section id="experience">
     <div class="section-label">Work experience</div>
     <div class="section-title">My career journey</div>
     <div class="timeline">
-
       <div class="timeline-item">
         <div class="timeline-date">Aug 2023<br>Present</div>
         <div class="timeline-body">
@@ -315,7 +257,6 @@
           </ul>
         </div>
       </div>
-
       <div class="timeline-item">
         <div class="timeline-date">Jan 2022<br>Aug 2023</div>
         <div class="timeline-body">
@@ -328,146 +269,79 @@
           </ul>
         </div>
       </div>
-
       <div class="timeline-item">
         <div class="timeline-date">Jul 2020<br>Dec 2021</div>
         <div class="timeline-body">
           <h3>Automation Engineer</h3>
           <div class="company">Mahamaya Group of Institutions</div>
-          <ul>
-            <li>Developed and maintained automation systems for institutional operations.</li>
-          </ul>
+          <ul><li>Developed and maintained automation systems for institutional operations.</li></ul>
         </div>
       </div>
-
       <div class="timeline-item">
         <div class="timeline-date">Jan 2020<br>Jul 2020</div>
         <div class="timeline-body">
           <h3>Software Engineer Trainee</h3>
           <div class="company">Cybrain Software Solutions</div>
-          <ul>
-            <li>Completed foundational software engineering training and contributed to live projects.</li>
-          </ul>
+          <ul><li>Completed foundational software engineering training and contributed to live projects.</li></ul>
         </div>
       </div>
-
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label">Projects</div>
     <div class="section-title">What I've built</div>
     <div class="projects-grid">
-
-      <div class="project-card">
-        <h3>Enterprise ERP Core System</h3>
-        <p>Scalable ERP platform with Purchase, Sales, Inventory, and Rule Engine modules. RBAC, JWT auth, and optimized SQL under high data loads.</p>
-        <div class="project-stack"><span class="stack-tag">Node.js</span><span class="stack-tag">React.js</span><span class="stack-tag">MySQL</span><span class="stack-tag">Microservices</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>AI Instagram Content Agent</h3>
-        <p>Fully automated AI-driven content engine for caption generation, image creation, and scheduled publishing. Reduced manual effort by 90%.</p>
-        <div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span><span class="stack-tag">Instagram API</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>AI Project Manager Assistant</h3>
-        <p>Advanced workflow integrating WhatsApp, audio transcription, GPT summarization, Notion, MySQL, and Google Calendar for real-time project coordination.</p>
-        <div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span><span class="stack-tag">WhatsApp</span><span class="stack-tag">Notion</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>ERP Chat Assistant</h3>
-        <p>Natural language chatbot integrated with ERP databases for instant querying, automated report generation, and operational insights.</p>
-        <div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">GPT-4</span><span class="stack-tag">MySQL</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>AI Email Responder</h3>
-        <p>Automated personalized email responses using OpenAI + Zapier. Reduced manual response time by 70% with standardized messaging.</p>
-        <div class="project-stack"><span class="stack-tag">Zapier</span><span class="stack-tag">OpenAI</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>AI Sales Agent</h3>
-        <p>GPT-driven cold-calling assistant for qualifying leads, scheduling appointments, and automated follow-ups to support sales pipeline automation.</p>
-        <div class="project-stack"><span class="stack-tag">Make.com</span><span class="stack-tag">Vapi</span><span class="stack-tag">GPT</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>Smart Document Processor</h3>
-        <p>AI-enabled document intelligence system to summarize, classify, and extract structured data from PDFs and text-based files.</p>
-        <div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>Real-Time CRM Automation</h3>
-        <p>Event-driven automation pipelines via MySQL triggers for invoices, quotations, approvals, and reports. Integrated with Gmail, Slack, and Trello.</p>
-        <div class="project-stack"><span class="stack-tag">Zapier</span><span class="stack-tag">MySQL</span><span class="stack-tag">Slack</span><span class="stack-tag">Trello</span></div>
-      </div>
-
-      <div class="project-card">
-        <h3>AI Company Validator</h3>
-        <p>Automated verification system that evaluates and scores company profiles using web-sourced data to improve CRM data reliability.</p>
-        <div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">Web Scraping</span></div>
-      </div>
-
+      <div class="project-card"><h3>Enterprise ERP Core System</h3><p>Scalable ERP platform with Purchase, Sales, Inventory, and Rule Engine modules. RBAC, JWT auth, and optimized SQL under high data loads.</p><div class="project-stack"><span class="stack-tag">Node.js</span><span class="stack-tag">React.js</span><span class="stack-tag">MySQL</span><span class="stack-tag">Microservices</span></div></div>
+      <div class="project-card"><h3>AI Instagram Content Agent</h3><p>Fully automated AI-driven content engine for caption generation, image creation, and scheduled publishing. Reduced manual effort by 90%.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span><span class="stack-tag">Instagram API</span></div></div>
+      <div class="project-card"><h3>AI Project Manager Assistant</h3><p>Advanced workflow integrating WhatsApp, audio transcription, GPT summarization, Notion, MySQL, and Google Calendar for real-time project coordination.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span><span class="stack-tag">WhatsApp</span><span class="stack-tag">Notion</span></div></div>
+      <div class="project-card"><h3>ERP Chat Assistant</h3><p>Natural language chatbot integrated with ERP databases for instant querying, automated report generation, and operational insights.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">GPT-4</span><span class="stack-tag">MySQL</span></div></div>
+      <div class="project-card"><h3>AI Email Responder</h3><p>Automated personalized email responses using OpenAI + Zapier. Reduced manual response time by 70% with standardized messaging.</p><div class="project-stack"><span class="stack-tag">Zapier</span><span class="stack-tag">OpenAI</span></div></div>
+      <div class="project-card"><h3>AI Sales Agent</h3><p>GPT-driven cold-calling assistant for qualifying leads, scheduling appointments, and automated follow-ups to support sales pipeline automation.</p><div class="project-stack"><span class="stack-tag">Make.com</span><span class="stack-tag">Vapi</span><span class="stack-tag">GPT</span></div></div>
+      <div class="project-card"><h3>Smart Document Processor</h3><p>AI-enabled document intelligence system to summarize, classify, and extract structured data from PDFs and text-based files.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span></div></div>
+      <div class="project-card"><h3>Real-Time CRM Automation</h3><p>Event-driven automation pipelines via MySQL triggers for invoices, quotations, approvals, and reports. Integrated with Gmail, Slack, and Trello.</p><div class="project-stack"><span class="stack-tag">Zapier</span><span class="stack-tag">MySQL</span><span class="stack-tag">Slack</span><span class="stack-tag">Trello</span></div></div>
+      <div class="project-card"><h3>AI Company Validator</h3><p>Automated verification system that evaluates and scores company profiles using web-sourced data to improve CRM data reliability.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">Web Scraping</span></div></div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- EDUCATION -->
   <section id="education">
     <div class="section-label">Education</div>
     <div class="section-title">Academic background</div>
     <div class="edu-grid">
-      <div class="edu-card">
-        <div class="year">2020</div>
-        <h3>MCA</h3>
-        <p>NIIS Institute of Business Administration</p>
-      </div>
-      <div class="edu-card">
-        <div class="year">2018</div>
-        <h3>BCA</h3>
-        <p>Mahamaya School of Business Management</p>
-      </div>
+      <div class="edu-card"><div class="year">2020</div><h3>MCA</h3><p>NIIS Institute of Business Administration</p></div>
+      <div class="edu-card"><div class="year">2018</div><h3>BCA</h3><p>Mahamaya School of Business Management</p></div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-label">Contact</div>
     <div class="section-title">Let's connect</div>
     <div class="contact-grid">
-      <a class="contact-card" href="tel:+919348755828">
-        <div class="contact-icon">📞</div>
-        <div><h4>Phone</h4><p>+91 93487 55828</p></div>
-      </a>
-      <a class="contact-card" href="mailto:debendramahilang885@gmail.com">
-        <div class="contact-icon">✉️</div>
-        <div><h4>Email</h4><p>debendramahilang885@gmail.com</p></div>
-      </a>
-      <a class="contact-card" href="https://linkedin.com/in/debendramahilang" target="_blank">
-        <div class="contact-icon">🔗</div>
-        <div><h4>LinkedIn</h4><p>debendramahilang</p></div>
-      </a>
-      <div class="contact-card">
-        <div class="contact-icon">📍</div>
-        <div><h4>Location</h4><p>Bhubaneswar, Odisha</p></div>
-      </div>
+      <a class="contact-card" href="tel:+919348755828"><div class="contact-icon">📞</div><div><h4>Phone</h4><p>+91 93487 55828</p></div></a>
+      <a class="contact-card" href="mailto:debendramahilang885@gmail.com"><div class="contact-icon">✉️</div><div><h4>Email</h4><p>debendramahilang885@gmail.com</p></div></a>
+      <a class="contact-card" href="https://linkedin.com/in/debendramahilang" target="_blank"><div class="contact-icon">🔗</div><div><h4>LinkedIn</h4><p>debendramahilang</p></div></a>
+      <div class="contact-card"><div class="contact-icon">📍</div><div><h4>Location</h4><p>Bhubaneswar, Odisha</p></div></div>
     </div>
   </section>
 
-  <footer>
-    <p>Designed & built by Debendra Prasad Mahilang · 2025</p>
-  </footer>
+  <footer><p>Designed & built by Debendra Prasad Mahilang · 2025</p></footer>
 
+  <script>
+    const html = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', saved);
+    btn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
 </body>
 </html>
