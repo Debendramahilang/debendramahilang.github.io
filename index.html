@@ -1,347 +1,638 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Debendra Prasad Mahilang | Senior Software Engineer</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Debendra Prasad Mahilang — Gen AI Developer & Agentic AI Engineer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
-    :root {
-      --bg: #f9f9f8;
-      --bg2: #f2f1ef;
-      --bg3: #eae9e6;
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.08);
-      --border2: rgba(0,0,0,0.14);
-      --text: #111110;
-      --muted: #666;
-      --accent: #5b4ef8;
-      --accent2: #5b4ef8;
-      --teal: #0d9488;
-      --nav-bg: rgba(249,249,248,0.9);
-      --toggle-bg: #ddd;
-      --shadow: 0 1px 4px rgba(0,0,0,0.06);
-    }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    [data-theme="dark"] {
-      --bg: #0d0d0d;
-      --bg2: #131313;
-      --bg3: #1a1a1a;
-      --card: #161616;
-      --border: rgba(255,255,255,0.07);
-      --border2: rgba(255,255,255,0.13);
-      --text: #f0f0f0;
-      --muted: #888;
-      --accent: #7c6af7;
-      --accent2: #a78bfa;
-      --teal: #2dd4bf;
-      --nav-bg: rgba(13,13,13,0.9);
-      --toggle-bg: #333;
-      --shadow: none;
-    }
+  :root {
+    --bg: #f7f5f0;
+    --bg2: #f0ede5;
+    --card: #fffdf9;
+    --border: rgba(26,22,14,0.10);
+    --border2: rgba(26,22,14,0.18);
+    --ink: #1c1a14;
+    --muted: #6b675c;
+    --accent: #1f4fd8;
+    --accent-ink: #16389e;
+    --amber: #b8791f;
+    --amber-bg: rgba(184,121,31,0.12);
+    --stamp: #1a7a54;
+    --shadow: 0 1px 2px rgba(26,22,14,0.05);
+    --shadow-lg: 0 10px 30px rgba(26,22,14,0.08);
+  }
+  [data-theme="dark"] {
+    --bg: #121110;
+    --bg2: #191814;
+    --card: #1c1b16;
+    --border: rgba(247,245,240,0.09);
+    --border2: rgba(247,245,240,0.17);
+    --ink: #f3f1ea;
+    --muted: #a8a498;
+    --accent: #7292ff;
+    --accent-ink: #9db3ff;
+    --amber: #e0ac52;
+    --amber-bg: rgba(224,172,82,0.14);
+    --stamp: #4fd39a;
+    --shadow: none;
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.35);
+  }
 
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg); color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 15px; line-height: 1.7;
-      transition: background 0.3s, color 0.3s;
-    }
-    a { color: var(--accent2); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15.5px; line-height: 1.65;
+    transition: background 0.25s, color 0.25s;
+    background-image:
+      radial-gradient(600px circle at 8% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%),
+      radial-gradient(500px circle at 100% 10%, color-mix(in srgb, var(--amber) 8%, transparent), transparent 60%);
+    background-repeat: no-repeat;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; }
+  a { color: var(--accent-ink); text-decoration: none; }
+  a:hover { text-decoration: underline; }
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--nav-bg); backdrop-filter: blur(14px);
-      border-bottom: 0.5px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem; height: 56px; transition: background 0.3s;
-    }
-    .nav-brand { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.3px; }
-    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
-    .nav-links { display: flex; gap: 1.75rem; }
-    .nav-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); text-decoration: none; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 2rem; height: 56px;
+  }
+  .nav-brand { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; }
+  .nav-right { display: flex; align-items: center; gap: 1.6rem; }
+  .nav-links { display: flex; gap: 1.6rem; }
+  .nav-links a { font-size: 13px; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .nav-cta {
+    font-size: 13px; font-weight: 500; color: #fff; background: var(--accent);
+    padding: 7px 15px; border-radius: 7px;
+  }
+  .nav-cta:hover { text-decoration: none; opacity: 0.9; }
 
-    .theme-btn {
-      background: var(--toggle-bg); border: none; cursor: pointer;
-      width: 46px; height: 25px; border-radius: 100px; position: relative;
-      transition: background 0.3s; flex-shrink: 0;
-    }
-    .theme-btn::after {
-      content: ''; position: absolute; top: 3.5px; left: 3.5px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: #fff; transition: transform 0.3s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-    }
-    [data-theme="dark"] .theme-btn::after { transform: translateX(21px); background: #222; }
-    .theme-btn .ico { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; line-height: 1; pointer-events: none; }
-    .theme-btn .ico-sun { left: 5px; }
-    .theme-btn .ico-moon { right: 4px; }
+  .theme-btn {
+    background: var(--border2); border: none; cursor: pointer;
+    width: 40px; height: 22px; border-radius: 100px; position: relative; flex-shrink: 0;
+  }
+  .theme-btn::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 16px; height: 16px; border-radius: 50%; background: var(--card);
+    transition: transform 0.25s; box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  }
+  [data-theme="dark"] .theme-btn::after { transform: translateX(18px); }
 
-    .hero {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 5rem 2rem 4rem; position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(91,78,248,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-inner { position: relative; max-width: 720px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(91,78,248,0.08); border: 0.5px solid rgba(91,78,248,0.25);
-      border-radius: 100px; padding: 4px 14px; font-size: 12px; color: var(--accent2);
-      margin-bottom: 1.5rem; letter-spacing: 0.3px;
-    }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -1px; line-height: 1.15; margin-bottom: 1rem; }
-    .hero h1 span { color: var(--accent2); }
-    .hero p { font-size: 1rem; color: var(--muted); max-width: 560px; margin: 0 auto 2rem; line-height: 1.75; }
-    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn { padding: 10px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-primary { background: var(--accent); color: #fff; border: none; }
-    .btn-primary:hover { opacity: 0.88; text-decoration: none; }
-    .btn-outline { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
-    .btn-outline:hover { background: var(--bg3); text-decoration: none; }
-    .hero-contacts { margin-top: 2.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-    .hero-contacts a { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
-    .hero-contacts a:hover { color: var(--text); text-decoration: none; }
+  /* HERO — bento layout */
+  .hero-wrap { max-width: 1080px; margin: 0 auto; padding: 6rem 2rem 3rem; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 2rem; align-items: start; }
+  .avail {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--border2); border-radius: 100px;
+    padding: 5px 13px 5px 10px; font-size: 12.5px; color: var(--muted); margin-bottom: 1.4rem;
+    background: var(--card);
+  }
+  .avail .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--stamp); }
+  .hero .role { font-size: 12.5px; color: var(--muted); letter-spacing: 0.2px; margin-bottom: 0.7rem; }
+  .hero h1 {
+    font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 500; letter-spacing: -0.5px;
+    line-height: 1.18; margin-bottom: 1.1rem;
+  }
+  .hero .lede { font-size: 1.02rem; color: var(--muted); max-width: 50ch; margin-bottom: 1.7rem; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { padding: 11px 22px; border-radius: 8px; font-size: 13.5px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-primary { background: var(--ink); color: var(--bg); border: 1px solid var(--ink); }
+  [data-theme="dark"] .btn-primary { background: var(--accent); border-color: var(--accent); color: #0e1220; }
+  .btn-primary:hover { opacity: 0.86; text-decoration: none; }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--border2); }
+  .btn-outline:hover { background: var(--bg2); text-decoration: none; }
 
-    section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
-    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.5rem; }
-    .section-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 2.5rem; }
-    .divider { border: none; border-top: 0.5px solid var(--border); margin: 0; }
+  .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .bento-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 1.1rem 1.2rem; box-shadow: var(--shadow);
+  }
+  .bento-card.full { grid-column: 1 / -1; }
+  .bento-card b { font-family: 'Fraunces', serif; font-size: 1.55rem; font-weight: 500; display: block; }
+  .bento-card span { font-size: 12px; color: var(--muted); }
+  .bento-card.dark { background: var(--ink); color: var(--bg); }
+  .bento-card.dark span { color: color-mix(in srgb, var(--bg) 60%, transparent); }
+  .bento-now { font-size: 12px; color: var(--muted); margin-bottom: 0.35rem; text-transform: none; }
+  .bento-card.dark .bento-now { color: color-mix(in srgb, var(--bg) 65%, transparent); }
+  .bento-card.dark p { font-size: 13.5px; line-height: 1.55; }
 
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .about-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
-    .about-card h4 { font-size: 13px; color: var(--muted); margin-bottom: 0.4rem; font-weight: 400; }
-    .about-card p { font-size: 15px; font-weight: 500; }
-    .about-bio { grid-column: 1 / -1; }
-    .about-bio p { color: var(--muted); line-height: 1.8; font-weight: 400; }
+  /* CLIENTS */
+  .clients-bar { padding: 0 2rem 2.6rem; max-width: 1080px; margin: 0 auto; }
+  .clients-label { font-size: 12px; color: var(--muted); margin-bottom: 1rem; text-align: center; }
+  .clients-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem 0.9rem; }
+  .client-pill {
+    font-family: 'Fraunces', serif; font-size: 14px; color: var(--ink);
+    border: 1px solid var(--border2); border-radius: 100px; padding: 7px 16px;
+    background: var(--card);
+  }
 
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-    .skill-group { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
-    .skill-group h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent2); margin-bottom: 0.75rem; font-weight: 600; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { background: var(--bg2); border: 0.5px solid var(--border2); border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--text); }
+  section { padding: 3rem 2rem; max-width: 1080px; margin: 0 auto; }
+  .kicker { font-size: 13px; color: var(--amber); font-weight: 500; margin-bottom: 0.45rem; }
+  .section-title { font-size: 1.55rem; font-weight: 500; letter-spacing: -0.4px; margin-bottom: 0.5rem; max-width: 32ch; }
+  .section-sub { color: var(--muted); max-width: 58ch; margin-bottom: 2rem; font-size: 14.5px; }
+  .divider { border: none; border-top: 1px solid var(--border); max-width: 1080px; margin: 0 auto; }
 
-    .timeline { display: flex; flex-direction: column; }
-    .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 2rem; padding-bottom: 2.5rem; }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-date { font-size: 12px; color: var(--muted); padding-top: 4px; text-align: right; line-height: 1.5; }
-    .timeline-body { border-left: 0.5px solid var(--border2); padding-left: 1.5rem; position: relative; }
-    .timeline-body::before { content: ''; position: absolute; left: -5px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
-    .timeline-body h3 { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
-    .timeline-body .company { font-size: 13px; color: var(--teal); margin-bottom: 0.75rem; }
-    .timeline-body ul { list-style: none; padding: 0; }
-    .timeline-body ul li { font-size: 13.5px; color: var(--muted); margin-bottom: 6px; padding-left: 1rem; position: relative; line-height: 1.6; }
-    .timeline-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
+  /* SERVICES */
+  .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .service { background: var(--card); padding: 1.4rem 1.5rem; }
+  .service .num { font-size: 12px; color: var(--muted); margin-bottom: 0.6rem; }
+  .service h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.4rem; font-family: 'Inter', sans-serif; }
+  .service p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
-    .project-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; transition: border-color 0.2s; box-shadow: var(--shadow); }
-    .project-card:hover { border-color: var(--accent2); }
-    .project-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
-    .project-card p { font-size: 12.5px; color: var(--muted); line-height: 1.65; margin-bottom: 0.75rem; }
-    .project-stack { display: flex; flex-wrap: wrap; gap: 4px; }
-    .stack-tag { background: rgba(91,78,248,0.08); border: 0.5px solid rgba(91,78,248,0.2); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--accent2); }
+  /* TOOLS */
+  .tools-category { margin-bottom: 1.5rem; }
+  .tools-category:last-child { margin-bottom: 0; }
+  .tools-cat-label { font-size: 12px; font-weight: 600; color: var(--amber); margin-bottom: 0.7rem; }
+  .tools-row { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+  .tool-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--border2); border-radius: 8px; padding: 5px 11px 5px 7px;
+    background: var(--card); font-size: 12.5px; color: var(--ink);
+  }
+  .tool-chip img { width: 15px; height: 15px; border-radius: 3px; object-fit: contain; flex-shrink: 0; }
+  .tool-chip.plain { padding: 5px 12px; }
 
-    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .edu-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
-    .edu-card .year { font-size: 12px; color: var(--teal); margin-bottom: 0.25rem; }
-    .edu-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.25rem; }
-    .edu-card p { font-size: 13px; color: var(--muted); }
+  /* PROCESS */
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+  .step {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.2rem 1.2rem 1.3rem;
+  }
+  .step .idx { font-family: 'Fraunces', serif; color: var(--amber); font-size: 1.3rem; margin-bottom: 0.6rem; }
+  .step h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.35rem; }
+  .step p { font-size: 12.8px; color: var(--muted); line-height: 1.55; }
 
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-    .contact-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s; box-shadow: var(--shadow); }
-    .contact-card:hover { border-color: var(--accent2); }
-    .contact-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(91,78,248,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
-    .contact-card h4 { font-size: 12px; color: var(--muted); margin-bottom: 2px; font-weight: 400; }
-    .contact-card p { font-size: 13px; font-weight: 500; word-break: break-all; }
+  /* WORK */
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .case-card {
+    border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.5rem;
+    background: var(--card); box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .case-card:hover { box-shadow: var(--shadow-lg); border-color: var(--border2); }
+  .case-card.wide { grid-column: 1 / -1; }
+  .case-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .case-card .result { color: var(--stamp); font-weight: 500; }
+  .case-card p { color: var(--muted); font-size: 13.3px; margin-bottom: 0.85rem; }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stack span { font-size: 11px; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); border-radius: 5px; padding: 2px 8px; }
 
-    footer { border-top: 0.5px solid var(--border); text-align: center; padding: 2rem; font-size: 12px; color: var(--muted); }
+  .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+  .more-card { border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.15rem; background: var(--card); }
+  .more-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 0.35rem; }
+  .more-card p { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
-    @media (max-width: 640px) {
-      nav { padding: 0 1rem; }
-      .nav-links { display: none; }
-      .about-grid, .edu-grid { grid-template-columns: 1fr; }
-      .timeline-item { grid-template-columns: 1fr; gap: 0.25rem; }
-      .timeline-date { text-align: left; }
-    }
-  </style>
+  .more-note {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    border: 1px dashed var(--border2); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 0.9rem;
+  }
+  .more-note p { font-size: 13px; color: var(--muted); }
+  .more-note a { font-size: 13px; font-weight: 500; color: var(--accent-ink); white-space: nowrap; }
+
+  /* EXPERIENCE */
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.6rem; }
+  .exp-item { border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.3rem; background: var(--card); }
+  .exp-date { font-size: 11.5px; color: var(--amber); margin-bottom: 0.5rem; font-weight: 600; }
+  .exp-item h3 { font-size: 14.5px; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .exp-item .co { font-size: 12.3px; color: var(--muted); margin-bottom: 0.5rem; }
+  .exp-item p { font-size: 12.8px; color: var(--muted); line-height: 1.55; }
+
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .edu-card { border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; background: var(--card); display: flex; align-items: center; gap: 1rem; }
+  .edu-card .year { font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--amber); flex-shrink: 0; }
+  .edu-card h3 { font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .edu-card p { font-size: 12px; color: var(--muted); }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.5rem; }
+  .faq-item { border-top: 1px solid var(--border); padding: 1.1rem 0; }
+  .faq-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.4rem; }
+  .faq-item p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* CONTACT */
+  .contact-panel {
+    background: var(--ink); color: var(--bg); border-radius: 18px; padding: 2.8rem 2.5rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .contact-panel::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(400px circle at 15% 0%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%);
+  }
+  [data-theme="dark"] .contact-panel { background: var(--card); border: 1px solid var(--border2); }
+  .contact-panel > * { position: relative; }
+  .contact-panel h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 0.6rem; }
+  .contact-panel p { color: color-mix(in srgb, var(--bg) 65%, transparent); margin-bottom: 1.6rem; }
+  [data-theme="dark"] .contact-panel p { color: var(--muted); }
+  .contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; font-size: 13.5px; }
+  .contact-links a { color: var(--bg); border-bottom: 1px solid color-mix(in srgb, var(--bg) 40%, transparent); padding-bottom: 2px; }
+  [data-theme="dark"] .contact-links a { color: var(--ink); }
+
+  footer { border-top: 1px solid var(--border); padding: 2.4rem 2rem; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-inner .fname { font-family: 'Fraunces', serif; font-size: 14.5px; }
+  .footer-inner .floc { font-size: 12px; color: var(--muted); }
+  .footer-links { display: flex; gap: 1.3rem; font-size: 12.5px; }
+  .footer-links a { color: var(--muted); }
+  .footer-links a:hover { color: var(--ink); }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .services { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .case-grid, .more-grid, .exp-grid, .faq { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
 </head>
 <body>
 
-  <nav>
-    <span class="nav-brand">Debendra Mahilang</span>
-    <div class="nav-right">
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
-        <span class="ico ico-sun">☀️</span>
-        <span class="ico ico-moon">🌙</span>
-      </button>
+<nav>
+  <span class="nav-brand">Debendra Mahilang</span>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#faq">FAQ</a>
     </div>
-  </nav>
+    <a class="nav-cta" href="#contact">Start a project</a>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme"></button>
+  </div>
+</nav>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge"><span class="dot"></span> Open to new opportunities</div>
-      <h1>Senior Software Engineer &<br><span>Generative AI Architect</span></h1>
-      <p>5+ years building scalable back-end systems and AI-powered automation frameworks. Specializing in Node.js microservices, OpenAI integrations, and enterprise workflow optimization.</p>
+<div class="hero-wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="avail"><span class="dot"></span> Available for new projects</div>
+      <div class="role">Gen AI Developer · Integration Specialist · Agentic AI Engineer</div>
+      <h1>I build agentic AI systems that take real action inside your business workflows.</h1>
+      <p class="lede">I'm Debendra — a Gen AI developer based in Bhubaneswar with 5+ years building Agentic AI systems in Python and Node.js. I design multi-step agents with LangChain and RAG, then take them from prototype to production inside CRM, ERP, and support workflows using n8n, Zapier, Make, and custom APIs.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#projects">View Projects</a>
-        <a class="btn btn-outline" href="#contact">Get in Touch</a>
-      </div>
-      <div class="hero-contacts">
-        <a href="tel:+919348755828">📞 +91 93487 55828</a>
-        <a href="mailto:debendramahilang885@gmail.com">✉️ debendramahilang885@gmail.com</a>
-        <a href="https://linkedin.com/in/debendramahilang" target="_blank">🔗 LinkedIn</a>
+        <a class="btn btn-primary" href="#contact">Start a project</a>
+        <a class="btn btn-outline" href="#work">See the work</a>
       </div>
     </div>
-  </section>
-
-  <hr class="divider" />
-
-  <section id="about">
-    <div class="section-label">About me</div>
-    <div class="section-title">Who I am</div>
-    <div class="about-grid">
-      <div class="about-card about-bio"><p>Results-driven Software Engineer architecting scalable microservices and intelligent automation systems. I specialize in eliminating repetitive enterprise operations through AI integration — transforming CRM/ERP workflows into self-operating, intelligent pipelines that drive measurable business efficiency.</p></div>
-      <div class="about-card"><h4>Location</h4><p>Bhubaneswar, Odisha</p></div>
-      <div class="about-card"><h4>Experience</h4><p>5+ Years</p></div>
-      <div class="about-card"><h4>Focus area</h4><p>Back-end & Generative AI</p></div>
-      <div class="about-card"><h4>Languages</h4><p>English, Hindi, Odia</p></div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <section id="skills">
-    <div class="section-label">Technical skills</div>
-    <div class="section-title">What I work with</div>
-    <div class="skills-grid">
-      <div class="skill-group"><h4>Back-end</h4><div class="skill-tags"><span class="tag">Node.js</span><span class="tag">PHP (CodeIgniter)</span><span class="tag">REST APIs</span><span class="tag">Microservices</span></div></div>
-      <div class="skill-group"><h4>Front-end</h4><div class="skill-tags"><span class="tag">React.js</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div></div>
-      <div class="skill-group"><h4>AI & Generative</h4><div class="skill-tags"><span class="tag">OpenAI GPT</span><span class="tag">Prompt Engineering</span><span class="tag">DALL·E</span><span class="tag">Hugging Face</span></div></div>
-      <div class="skill-group"><h4>Automation</h4><div class="skill-tags"><span class="tag">n8n</span><span class="tag">Zapier</span><span class="tag">Make.com</span><span class="tag">Webhooks</span></div></div>
-      <div class="skill-group"><h4>Integrations</h4><div class="skill-tags"><span class="tag">WhatsApp API</span><span class="tag">Instagram API</span><span class="tag">Gmail API</span><span class="tag">Google Calendar</span></div></div>
-      <div class="skill-group"><h4>DevOps & DB</h4><div class="skill-tags"><span class="tag">MySQL</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Postman</span></div></div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <section id="experience">
-    <div class="section-label">Work experience</div>
-    <div class="section-title">My career journey</div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-date">Aug 2023<br>Present</div>
-        <div class="timeline-body">
-          <h3>Senior Software Engineer</h3>
-          <div class="company">DBI360 · Bhubaneswar, Odisha</div>
-          <ul>
-            <li>Leading development of Rule Engine Workflow and Purchase modules using Node.js, React.js, PHP, and MySQL in a microservices architecture.</li>
-            <li>Architecting AI-powered automation frameworks that transform repetitive ERP/CRM processes into intelligent self-operating workflows.</li>
-            <li>Integrating Generative AI (OpenAI GPT) for natural language ERP querying, automated approvals, and document processing.</li>
-            <li>Mentoring junior developers and promoting best practices in modular development and structured AI implementation.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">Jan 2022<br>Aug 2023</div>
-        <div class="timeline-body">
-          <h3>Software Engineer</h3>
-          <div class="company">Springlogix Software Solutions · Hyderabad</div>
-          <ul>
-            <li>Spearheaded development of HeyPockets CRM platform using PHP (CodeIgniter), JavaScript, and MySQL.</li>
-            <li>Automated internal reporting and operational workflows, reducing turnaround time significantly.</li>
-            <li>Built early-stage AI-driven prototypes to automate customer query handling and dynamic report generation.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">Jul 2020<br>Dec 2021</div>
-        <div class="timeline-body">
-          <h3>Automation Engineer</h3>
-          <div class="company">Mahamaya Group of Institutions</div>
-          <ul><li>Developed and maintained automation systems for institutional operations.</li></ul>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">Jan 2020<br>Jul 2020</div>
-        <div class="timeline-body">
-          <h3>Software Engineer Trainee</h3>
-          <div class="company">Cybrain Software Solutions</div>
-          <ul><li>Completed foundational software engineering training and contributed to live projects.</li></ul>
-        </div>
+    <div class="bento">
+      <div class="bento-card"><b>5+ yrs</b><span>professional engineering</span></div>
+      <div class="bento-card"><b>Agentic AI</b><span>core specialty</span></div>
+      <div class="bento-card"><b>5</b><span>clients served</span></div>
+      <div class="bento-card"><b>Odisha, IN</b><span>UTC +5:30</span></div>
+      <div class="bento-card dark full">
+        <div class="bento-now">Currently</div>
+        <p>Designing LangChain agents and RAG pipelines for enterprise knowledge bases, and shipping AI voice agents on VAPI for lead qualification.</p>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <hr class="divider" />
+<div class="clients-bar">
+  <p class="clients-label">Clients I've worked with</p>
+  <div class="clients-row">
+    <span class="client-pill">Art of Galaxy</span>
+    <span class="client-pill">Kilent Software</span>
+    <span class="client-pill">Lilian Ruff</span>
+    <span class="client-pill">One Marketings</span>
+    <span class="client-pill">Homizen De</span>
+  </div>
+</div>
 
-  <section id="projects">
-    <div class="section-label">Projects</div>
-    <div class="section-title">What I've built</div>
-    <div class="projects-grid">
-      <div class="project-card"><h3>Enterprise ERP Core System</h3><p>Scalable ERP platform with Purchase, Sales, Inventory, and Rule Engine modules. RBAC, JWT auth, and optimized SQL under high data loads.</p><div class="project-stack"><span class="stack-tag">Node.js</span><span class="stack-tag">React.js</span><span class="stack-tag">MySQL</span><span class="stack-tag">Microservices</span></div></div>
-      <div class="project-card"><h3>AI Instagram Content Agent</h3><p>Fully automated AI-driven content engine for caption generation, image creation, and scheduled publishing. Reduced manual effort by 90%.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span><span class="stack-tag">Instagram API</span></div></div>
-      <div class="project-card"><h3>AI Project Manager Assistant</h3><p>Advanced workflow integrating WhatsApp, audio transcription, GPT summarization, Notion, MySQL, and Google Calendar for real-time project coordination.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span><span class="stack-tag">WhatsApp</span><span class="stack-tag">Notion</span></div></div>
-      <div class="project-card"><h3>ERP Chat Assistant</h3><p>Natural language chatbot integrated with ERP databases for instant querying, automated report generation, and operational insights.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">GPT-4</span><span class="stack-tag">MySQL</span></div></div>
-      <div class="project-card"><h3>AI Email Responder</h3><p>Automated personalized email responses using OpenAI + Zapier. Reduced manual response time by 70% with standardized messaging.</p><div class="project-stack"><span class="stack-tag">Zapier</span><span class="stack-tag">OpenAI</span></div></div>
-      <div class="project-card"><h3>AI Sales Agent</h3><p>GPT-driven cold-calling assistant for qualifying leads, scheduling appointments, and automated follow-ups to support sales pipeline automation.</p><div class="project-stack"><span class="stack-tag">Make.com</span><span class="stack-tag">Vapi</span><span class="stack-tag">GPT</span></div></div>
-      <div class="project-card"><h3>Smart Document Processor</h3><p>AI-enabled document intelligence system to summarize, classify, and extract structured data from PDFs and text-based files.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span></div></div>
-      <div class="project-card"><h3>Real-Time CRM Automation</h3><p>Event-driven automation pipelines via MySQL triggers for invoices, quotations, approvals, and reports. Integrated with Gmail, Slack, and Trello.</p><div class="project-stack"><span class="stack-tag">Zapier</span><span class="stack-tag">MySQL</span><span class="stack-tag">Slack</span><span class="stack-tag">Trello</span></div></div>
-      <div class="project-card"><h3>AI Company Validator</h3><p>Automated verification system that evaluates and scores company profiles using web-sourced data to improve CRM data reliability.</p><div class="project-stack"><span class="stack-tag">n8n</span><span class="stack-tag">Web Scraping</span></div></div>
+<hr class="divider" />
+
+<section id="services">
+  <div class="kicker">Services</div>
+  <h2 class="section-title">Where I can help</h2>
+  <p class="section-sub">Five areas I keep getting hired for — pick one, or bring a problem and I'll tell you which applies.</p>
+  <div class="services">
+    <div class="service">
+      <div class="num">01</div>
+      <h3>Agentic AI systems</h3>
+      <p>Multi-step AI agents built with LangChain in Python or Node.js — agents that reason, call tools, and take real actions inside your workflow, not just answer questions.</p>
     </div>
-  </section>
-
-  <hr class="divider" />
-
-  <section id="education">
-    <div class="section-label">Education</div>
-    <div class="section-title">Academic background</div>
-    <div class="edu-grid">
-      <div class="edu-card"><div class="year">2020</div><h3>MCA</h3><p>NIIS Institute of Business Administration</p></div>
-      <div class="edu-card"><div class="year">2018</div><h3>BCA</h3><p>Mahamaya School of Business Management</p></div>
+    <div class="service">
+      <div class="num">02</div>
+      <h3>RAG & knowledge systems</h3>
+      <p>Retrieval-augmented pipelines with vector databases so an AI assistant answers from your own documents and data — enterprise search and internal knowledge bases included.</p>
     </div>
-  </section>
-
-  <hr class="divider" />
-
-  <section id="contact">
-    <div class="section-label">Contact</div>
-    <div class="section-title">Let's connect</div>
-    <div class="contact-grid">
-      <a class="contact-card" href="tel:+919348755828"><div class="contact-icon">📞</div><div><h4>Phone</h4><p>+91 93487 55828</p></div></a>
-      <a class="contact-card" href="mailto:debendramahilang885@gmail.com"><div class="contact-icon">✉️</div><div><h4>Email</h4><p>debendramahilang885@gmail.com</p></div></a>
-      <a class="contact-card" href="https://linkedin.com/in/debendramahilang" target="_blank"><div class="contact-icon">🔗</div><div><h4>LinkedIn</h4><p>debendramahilang</p></div></a>
-      <div class="contact-card"><div class="contact-icon">📍</div><div><h4>Location</h4><p>Bhubaneswar, Odisha</p></div></div>
+    <div class="service">
+      <div class="num">03</div>
+      <h3>Workflow automation & integration</h3>
+      <p>n8n, Zapier, and Make pipelines with OAuth and webhooks connecting your CRM, ERP, and communication tools into one event-driven system.</p>
     </div>
-  </section>
+    <div class="service">
+      <div class="num">04</div>
+      <h3>CRM & ERP automation</h3>
+      <p>Procurement, approval, and reporting automation built directly into GoHighLevel, HubSpot, Zoho, or a custom ERP platform.</p>
+    </div>
+    <div class="service">
+      <div class="num">05</div>
+      <h3>AI voice agents</h3>
+      <p>VAPI-powered voice agents for inbound and outbound calls — automated transcription, lead qualification, and CRM updates after every call.</p>
+    </div>
+    <div class="service">
+      <div class="num">06</div>
+      <h3>Marketing automation & lead scraping</h3>
+      <p>Marketing workflows that run themselves — lead scraping and enrichment, outreach sequencing, and campaign automation wired into your CRM and messaging tools.</p>
+    </div>
+  </div>
+</section>
 
-  <footer><p>Designed & built by Debendra Prasad Mahilang · 2025</p></footer>
+<hr class="divider" />
 
-  <script>
-    const html = document.documentElement;
-    const btn = document.getElementById('themeToggle');
-    const saved = localStorage.getItem('theme') || 'light';
-    html.setAttribute('data-theme', saved);
-    btn.addEventListener('click', () => {
-      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    });
-  </script>
+<section>
+  <div class="kicker">Toolkit</div>
+  <h2 class="section-title">Tools & platforms I work with</h2>
+  <p class="section-sub">The models, platforms, and stacks I reach for depending on what a project needs.</p>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">AI models & agents</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/OADD2.1188572099426991_1DYSUV6VCN3P9CY?w=32&h=32&o=6&pid=21.2" alt="">OpenAI</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/anthropic" alt="">Claude</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/googlegemini" alt="">Gemini</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.oxRCQ5nxU17x_vGXUT7kqg?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Grok</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/langchain" alt="">LangChain</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.ZqI81y5n0F-l99U2gENJbQ?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Langflow</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.KL9gWrfcM54Jk2f-_ZGEXA?w=32&h=32&o=6&pid=AdsPlus" alt="">VAPI</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.vItOe1VVmGgie2HpAS-rqA?w=32&h=32&qlt=92&pcl=fffffa&o=6&pid=1.2" alt="">Nano Banana</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">Automation & workflow</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/n8n" alt="">n8n</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/zapier" alt="">Zapier</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.E9bqmnux2cL7U9xlzXj8Gg?w=32&h=32&o=6&pid=AdsPlus" alt="">Make</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.nahI7QvMhd9A98WarhqhTQ?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Pabbly</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">CRM & business platforms</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/hubspot" alt="">HubSpot</span>
+      <span class="tool-chip"><img src="https://www.zohowebstatic.com/sites/zweb/images/commonroot/zoho-logo-web.svg" alt="">Zoho</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.8bZbWXL6lVtbHRg_kyLA6Q?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Salesforce</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/OADD2.1340304701876809_1BKOTCY9DYD9W64?w=32&h=32&o=6&pid=21.2" alt="">GoHighLevel</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.ikHqnZOu1JBxC_YQGK31MQ?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Monday</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/notion" alt="">Notion</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">Cloud & databases</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/OADD2.8246449846517_1I9M66X31KHVXEO8GZ?w=32&h=32&o=6&pid=21.2" alt="">AWS</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.Y77AUHJ37M167GfxiS3cyg?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Microsoft</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/googlecloud" alt="">Google Cloud</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/supabase" alt="">Supabase</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/firebase" alt="">Firebase</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/postgresql" alt="">PostgreSQL</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/mysql" alt="">MySQL</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/mongodb" alt="">MongoDB</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">RAG & knowledge systems</div>
+    <div class="tools-row">
+      <span class="tool-chip plain">Vector Databases</span>
+      <span class="tool-chip plain">Semantic Search</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/langchain" alt="">LangChain</span>
+      <span class="tool-chip plain">Function Calling</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">AI-assisted development</div>
+    <div class="tools-row">
+      <span class="tool-chip plain">Cursor AI</span>
+      <span class="tool-chip plain">GitHub Copilot</span>
+      <span class="tool-chip plain">Claude Code</span>
+      <span class="tool-chip plain">ChatGPT</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">Development stack</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/react" alt="">React</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/nextdotjs" alt="">Next.js</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/node.js" alt="">Node.js</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/python" alt="">Python</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/php" alt="">PHP</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/github" alt="">GitHub</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">Messaging & communication</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.X_6d1syZ2c43GjPSoGzEoA?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Twilio</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/mailchimp" alt="">Mailchimp</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/brevo" alt="">Brevo</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/whatsapp" alt="">WhatsApp</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.ktnx-s0htkxPnrNuMaKE4w?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Wati</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.5FCm2RhtXGxtbxIY5CqOXQ?w=32&h=32&qlt=91&pcl=fffffa&o=6&pid=1.2" alt="">ManyChat</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/telegram" alt="">Telegram</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.n2g9oy8TP6UNCM94Dtwqdw?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Slack</span>
+    </div>
+  </div>
+
+  <div class="tools-category">
+    <div class="tools-cat-label">Social & marketing</div>
+    <div class="tools-row">
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.cQGDzDdW-31GYqwCeCzTrw?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Google</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.fYZFrS0zcRTBamv-F6K_ww?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">Twitter</span>
+      <span class="tool-chip"><img src="https://th.bing.com/th/id/ODF.F8hkx5f_DpSQJ5Rg49E4Pg?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="">LinkedIn</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/facebook" alt="">Facebook</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/instagram" alt="">Instagram</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/youtube" alt="">YouTube</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/tiktok" alt="">TikTok</span>
+      <span class="tool-chip"><img src="https://cdn.simpleicons.org/pinterest" alt="">Pinterest</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section>
+  <div class="kicker">Process</div>
+  <h2 class="section-title">How a project runs</h2>
+  <p class="section-sub">Same four steps whether it's a two-week automation or a multi-month build.</p>
+  <div class="process-grid">
+    <div class="step">
+      <div class="idx">1</div>
+      <h4>Discovery call</h4>
+      <p>A 20–30 minute call to understand the workflow you want to fix and whether I'm the right fit for it.</p>
+    </div>
+    <div class="step">
+      <div class="idx">2</div>
+      <h4>Scope & quote</h4>
+      <p>A short written proposal — what gets built, in what order, and what it costs — before any code is written.</p>
+    </div>
+    <div class="step">
+      <div class="idx">3</div>
+      <h4>Build in the open</h4>
+      <p>Regular check-ins as modules ship, so you're never waiting weeks for a surprise.</p>
+    </div>
+    <div class="step">
+      <div class="idx">4</div>
+      <h4>Handover & support</h4>
+      <p>Documentation, a walkthrough for your team, and a support window after launch.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="work">
+  <div class="kicker">Selected work</div>
+  <h2 class="section-title">Recent projects</h2>
+  <p class="section-sub">A few systems I've built end to end, from the problem they solved to what shipped.</p>
+
+  <div class="case-grid">
+    <div class="case-card">
+      <h3>AI Voice Agent & Sales Automation Platform</h3>
+      <p>Designed AI voice agents for inbound and outbound customer calls, with automated transcription and lead qualification built in. <span class="result">Call summaries, CRM updates, and follow-ups now generate automatically after every call.</span></p>
+      <div class="stack"><span>LangChain</span><span>VAPI</span><span>OpenAI</span><span>n8n</span><span>PostgreSQL</span></div>
+    </div>
+    <div class="case-card">
+      <h3>Embeddable AI Support Widget</h3>
+      <p>A plug-and-play chatbot widget any client can add to their site with one script tag — no backend changes required. Configured with RAG so it answers from each client's own content. <span class="result">Includes live-agent handoff when the AI needs to escalate.</span></p>
+      <div class="stack"><span>React.js</span><span>Node.js</span><span>LangChain</span><span>RAG</span><span>Webhooks</span></div>
+    </div>
+    <div class="case-card wide">
+      <h3>AI-Powered ERP & CRM Automation Platform</h3>
+      <p>End-to-end automation connecting ERP and CRM systems to AI services — approvals, notifications, and reporting run without manual input, with GoHighLevel, HubSpot, Zoho, WhatsApp, Gmail, and Google Calendar wired together through APIs and webhooks. <span class="result">Turned a multi-step manual approval chain into a single automated flow.</span></p>
+      <div class="stack"><span>OpenAI</span><span>LangChain</span><span>Node.js</span><span>MySQL</span><span>n8n</span><span>GoHighLevel</span><span>HubSpot</span><span>Zoho</span></div>
+    </div>
+  </div>
+
+  <div class="more-grid">
+    <div class="more-card"><h4>ERP AI Assistant & Support Agent</h4><p>Handles customer queries with automated support actions and live-agent handoff.</p></div>
+    <div class="more-card"><h4>Intelligent Workflow Automation Hub</h4><p>Centralized automation with reusable templates, monitoring, and alerting for production reliability.</p></div>
+    <div class="more-card"><h4>AI Instagram Content Agent</h4><p>Generates captions and images and publishes on a schedule — cut manual effort by ~90%.</p></div>
+    <div class="more-card"><h4>AI Email Responder</h4><p>Automated, personalized replies via OpenAI + Zapier — cut response time ~70%.</p></div>
+    <div class="more-card"><h4>Smart Document Processor</h4><p>Summarizes, classifies, and extracts structured data from PDFs.</p></div>
+    <div class="more-card"><h4>AI Company Validator</h4><p>Scores company profiles from web-sourced data to improve CRM reliability.</p></div>
+  </div>
+
+  <div class="more-note">
+    <p>These are a handful of examples — most of the workflows and systems I've built for clients aren't public.</p>
+    <a href="#contact">Know more — get in touch →</a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="experience">
+  <div class="kicker">Background</div>
+  <h2 class="section-title">Where this experience comes from</h2>
+  <div class="exp-grid">
+    <div class="exp-item">
+      <div class="exp-date">AUG 2023 — PRESENT</div>
+      <h3>Senior Software Engineer & AI Automation Specialist</h3>
+      <div class="co">DBI360 · Bhubaneswar</div>
+      <p>Design agentic AI systems with LangChain in Python and Node.js, build RAG pipelines for enterprise knowledge bases, and ship VAPI voice agents integrated into GoHighLevel, HubSpot, and Zoho. Architect end-to-end automation across ERP, CRM, and AI services via n8n, Zapier, and webhooks, and mentor the team on agent architecture.</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">JAN 2022 — AUG 2023</div>
+      <h3>Software Engineer</h3>
+      <div class="co">Springlogix Software Solutions · Hyderabad</div>
+      <p>Built the HeyPockets CRM platform in PHP, JavaScript, and MySQL. Developed early AI-powered automation prototypes for customer support and report generation, and integrated third-party systems through REST APIs and workflow platforms.</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">JUL 2020 — DEC 2021</div>
+      <h3>Website & Automation Manager</h3>
+      <div class="co">Mahamaya Group of Institutions</div>
+      <p>Built internal automation solutions and managed institutional web applications, including library and asset management systems, and led workflow digitization initiatives.</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">JAN 2020 — JUL 2020</div>
+      <h3>Software Engineer Trainee</h3>
+      <div class="co">Cybrain Software Solutions</div>
+      <p>Assisted with frontend and backend development, database operations, debugging, and feature enhancements.</p>
+    </div>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card"><div class="year">2020</div><div><h3>MCA</h3><p>NIIS Institute of Business Administration</p></div></div>
+    <div class="edu-card"><div class="year">2018</div><div><h3>BCA</h3><p>Mahamaya School of Business Management</p></div></div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="faq">
+  <div class="kicker">FAQ</div>
+  <h2 class="section-title">Questions I get asked</h2>
+  <p class="section-sub">If yours isn't here, it's faster to just ask on the call.</p>
+  <div class="faq">
+    <div class="faq-item">
+      <h4>Do you work with teams outside India?</h4>
+      <p>Yes — most of my recent clients are remote. I overlap comfortably with US and EU working hours for calls.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Do you take on short, one-off automations?</h4>
+      <p>Yes. A single workflow — like connecting your CRM to WhatsApp — is a common starting project before a longer engagement.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can you work inside our existing codebase?</h4>
+      <p>Yes, that's most of what I do. I'll read the codebase before quoting so the estimate reflects reality, not a guess.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What do you need from me to start?</h4>
+      <p>A description of the manual process, access to the relevant tools or repo, and one call to confirm scope.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-panel">
+    <h2>Have a workflow worth automating?</h2>
+    <p>Tell me what's eating your team's time — I'll tell you honestly whether I can fix it.</p>
+    <div class="contact-links">
+      <a href="mailto:debendramahilang885@gmail.com">debendramahilang885@gmail.com</a>
+      <a href="tel:+919348755828">+91 93487 55828</a>
+      <a href="https://linkedin.com/in/debendramahilang" target="_blank">LinkedIn</a>
+      <a href="https://debendramahilang.github.io" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="fname">Debendra Prasad Mahilang</div>
+      <div class="floc">Bhubaneswar, Odisha · Available for freelance work</div>
+    </div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:debendramahilang885@gmail.com">Email</a>
+      <a href="https://debendramahilang.github.io" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  html.setAttribute('data-theme', 'light');
+  btn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+  });
+</script>
 </body>
 </html>
