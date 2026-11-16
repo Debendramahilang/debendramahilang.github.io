@@ -382,6 +382,7 @@
 
   .field select,
   .field input[type="text"],
+  .field input[type="password"],
   .field textarea {
     width: 100%;
     border: 1px solid var(--border-2);
@@ -393,6 +394,7 @@
 
   .field select:focus,
   .field input[type="text"]:focus,
+  .field input[type="password"]:focus,
   .field textarea:focus {
     outline: none;
     border-color: var(--accent);
@@ -542,8 +544,8 @@
     </div>
 
     <div class="sidebar-foot">
-      Each agent here maps to a real n8n workflow. Swap the webhook URL in
-      the panel on the right to connect it live.
+      Add your own OpenAI, Claude, Gemini or Groq API key in the panel on
+      the right to try each agent live, or connect an n8n webhook.
       <br /><br />
       <a href="mailto:debendramahilang885@gmail.com">Ask about the build →</a>
     </div>
@@ -596,6 +598,23 @@
     </div>
 
     <div class="field">
+      <label for="providerSelect">Connection</label>
+      <select id="providerSelect">
+        <option value="openai">OpenAI (your key)</option>
+        <option value="anthropic">Anthropic Claude (your key)</option>
+        <option value="gemini">Google Gemini (your key)</option>
+        <option value="groq">Groq (your key)</option>
+        <option value="n8n">n8n webhook</option>
+      </select>
+    </div>
+
+    <div class="field" id="keyField">
+      <label for="apiKeyInput">API key</label>
+      <input type="password" id="apiKeyInput" placeholder="Paste your API key" autocomplete="off" spellcheck="false" />
+      <div class="field-hint" id="keyHint">Your key stays in this browser tab only. It is sent straight to the provider, never to this site, and is cleared when you close the tab.</div>
+    </div>
+
+    <div class="field" id="webhookField">
       <label for="webhookInput">n8n webhook URL</label>
       <input type="text" id="webhookInput" placeholder="https://your-n8n.app/webhook/agent-id" />
       <div class="field-hint">Paste the production webhook for this agent. Requests are sent as a JSON POST — nothing is saved after you leave the page.</div>
@@ -603,12 +622,9 @@
 
     <div class="field">
       <label for="modelSelect">Model</label>
-      <select id="modelSelect">
-        <option>gpt-4o-mini</option>
-        <option>gpt-4o</option>
-        <option>claude-sonnet</option>
-        <option>gemini-1.5-pro</option>
-      </select>
+      <input type="text" id="modelSelect" list="modelList" spellcheck="false" />
+      <datalist id="modelList"></datalist>
+      <div class="field-hint">Pick a suggestion or type any model name your key can use.</div>
     </div>
 
     <div class="field">
@@ -628,9 +644,9 @@
     <hr class="config-divider" />
 
     <div class="architecture-note" id="archNote">
-      <b>How this works.</b> Your message is sent to the webhook above. n8n
-      receives it, runs the agent's workflow (context lookup, tool calls,
-      business logic), and returns a reply the page displays.
+      <b>How this works.</b> Your message, the chat history and the agent's
+      system prompt are sent straight from your browser to the provider you
+      picked, using your own key. Nothing passes through this site.
     </div>
 
   </aside>
@@ -707,13 +723,54 @@
     }
   ];
 
+  // =========================================================
+  // PROVIDERS — visitors bring their own key; calls go browser → provider
+  // =========================================================
+
+  const PROVIDERS = {
+    openai: {
+      label: "OpenAI",
+      models: ["gpt-4o-mini", "gpt-4.1-mini", "gpt-4.1", "gpt-4o"],
+      keyHint: "Get one at platform.openai.com/api-keys",
+      keyPrefix: "sk-"
+    },
+    anthropic: {
+      label: "Anthropic",
+      models: ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5"],
+      keyHint: "Get one at console.anthropic.com",
+      keyPrefix: "sk-ant-"
+    },
+    gemini: {
+      label: "Google Gemini",
+      models: ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash"],
+      keyHint: "Get a free one at aistudio.google.com/apikey",
+      keyPrefix: ""
+    },
+    groq: {
+      label: "Groq",
+      models: ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"],
+      keyHint: "Get a free one at console.groq.com/keys",
+      keyPrefix: "gsk_"
+    },
+    n8n: { label: "n8n webhook", models: ["gpt-4o-mini", "gpt-4o"] }
+  };
+
+  // sessionStorage: survives reloads in this tab, gone when the tab closes.
+  const store = {
+    get(k) { try { return sessionStorage.getItem(k) || ""; } catch { return ""; } },
+    set(k, v) { try { v ? sessionStorage.setItem(k, v) : sessionStorage.removeItem(k); } catch {} }
+  };
+
+  let provider = store.get("pc.provider") || "openai";
+  if (!PROVIDERS[provider]) provider = "openai";
+
   let activeId = agents[0].id;
   const chatLogs = {};
-  const overrides = {}; // per-agent config overrides { webhook, model, temp, prompt }
+  const overrides = {}; // per-agent config { webhook, model, temp, prompt }
 
   agents.forEach(a => {
-    chatLogs[a.id] = [{ role: "assistant", text: a.greeting }];
-    overrides[a.id] = { webhook: a.webhook, model: "gpt-4o-mini", temp: 0.4, prompt: a.prompt };
+    chatLogs[a.id] = [{ role: "assistant", text: a.greeting, intro: true }];
+    overrides[a.id] = { webhook: a.webhook, model: "", temp: 0.4, prompt: a.prompt };
   });
 
   const agentListEl = document.getElementById("agentList");
@@ -724,15 +781,30 @@
   const sendBtn = document.getElementById("sendBtn");
   const resetBtn = document.getElementById("resetBtn");
 
+  const providerSelect = document.getElementById("providerSelect");
+  const apiKeyInput = document.getElementById("apiKeyInput");
+  const keyField = document.getElementById("keyField");
+  const keyHint = document.getElementById("keyHint");
+  const webhookField = document.getElementById("webhookField");
   const webhookInput = document.getElementById("webhookInput");
   const modelSelect = document.getElementById("modelSelect");
+  const modelList = document.getElementById("modelList");
   const tempRange = document.getElementById("tempRange");
   const tempVal = document.getElementById("tempVal");
   const promptBox = document.getElementById("promptBox");
   const statusPill = document.getElementById("statusPill");
   const testBtn = document.getElementById("testBtn");
 
+  const KEY_HINT_BASE = "Your key stays in this browser tab only. It is sent straight to the provider, never to this site, and is cleared when you close the tab.";
+
   function getAgent(id) { return agents.find(a => a.id === id); }
+  function apiKey() { return store.get("pc.key." + provider); }
+  function currentModel() { return overrides[activeId].model || PROVIDERS[provider].models[0]; }
+
+  function setStatus(kind, text) {
+    statusPill.className = "status-pill " + kind;
+    statusPill.innerHTML = '<span class="pdot"></span>' + escapeHtml(text);
+  }
 
   function renderSidebar() {
     agentListEl.querySelectorAll(".agent-btn").forEach(b => b.remove());
@@ -757,15 +829,27 @@
     agentSubEl.textContent = a.sub;
   }
 
+  function renderProvider() {
+    const p = PROVIDERS[provider];
+    providerSelect.value = provider;
+    const isN8n = provider === "n8n";
+    keyField.style.display = isN8n ? "none" : "";
+    webhookField.style.display = isN8n ? "" : "none";
+    apiKeyInput.value = apiKey();
+    keyHint.textContent = (p.keyHint ? p.keyHint + ". " : "") + KEY_HINT_BASE;
+    modelList.innerHTML = p.models.map(m => `<option value="${m}"></option>`).join("");
+    modelSelect.placeholder = p.models[0];
+  }
+
   function renderConfig() {
     const cfg = overrides[activeId];
+    renderProvider();
     webhookInput.value = cfg.webhook;
     modelSelect.value = cfg.model;
     tempRange.value = cfg.temp;
     tempVal.textContent = cfg.temp;
     promptBox.value = cfg.prompt;
-    statusPill.className = "status-pill unknown";
-    statusPill.innerHTML = '<span class="pdot"></span>Not tested';
+    setStatus("unknown", provider !== "n8n" && !apiKey() ? "Add a key" : "Not tested");
   }
 
   function bubbleHtml(msg) {
@@ -815,24 +899,157 @@
   sendBtn.addEventListener("click", sendMessage);
 
   resetBtn.addEventListener("click", () => {
-    chatLogs[activeId] = [{ role: "assistant", text: getAgent(activeId).greeting }];
+    chatLogs[activeId] = [{ role: "assistant", text: getAgent(activeId).greeting, intro: true }];
     renderThread();
   });
 
+  // ---------------------------------------------------------
+  // Provider calls. `history` = [{role:"user"|"assistant", text}]
+  // ---------------------------------------------------------
+
+  async function readError(res) {
+    let detail = "";
+    try {
+      const j = await res.json();
+      detail = j.error?.message || j.error?.type || j.message || JSON.stringify(j);
+    } catch { try { detail = await res.text(); } catch {} }
+    return `${res.status}${detail ? " — " + detail : ""}`;
+  }
+
+  async function callProvider({ history, system, model, temperature, maxTokens = 800, signal }) {
+    const key = apiKey();
+    const temp = Number(temperature);
+
+    if (provider === "openai" || provider === "groq") {
+      const url = provider === "openai"
+        ? "https://api.openai.com/v1/chat/completions"
+        : "https://api.groq.com/openai/v1/chat/completions";
+      const res = await fetch(url, {
+        method: "POST",
+        signal,
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+        body: JSON.stringify({
+          model,
+          temperature: temp,
+          max_tokens: maxTokens,
+          messages: [
+            { role: "system", content: system },
+            ...history.map(m => ({ role: m.role, content: m.text }))
+          ]
+        })
+      });
+      if (!res.ok) throw new Error(await readError(res));
+      const data = await res.json();
+      return data.choices?.[0]?.message?.content?.trim() || "(empty reply)";
+    }
+
+    if (provider === "anthropic") {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        signal,
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true"
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: maxTokens,
+          temperature: temp,
+          system,
+          messages: history.map(m => ({ role: m.role, content: m.text }))
+        })
+      });
+      if (!res.ok) throw new Error(await readError(res));
+      const data = await res.json();
+      return (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n").trim() || "(empty reply)";
+    }
+
+    if (provider === "gemini") {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+      const res = await fetch(url, {
+        method: "POST",
+        signal,
+        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: system }] },
+          contents: history.map(m => ({
+            role: m.role === "assistant" ? "model" : "user",
+            parts: [{ text: m.text }]
+          })),
+          generationConfig: { temperature: temp, maxOutputTokens: maxTokens }
+        })
+      });
+      if (!res.ok) throw new Error(await readError(res));
+      const data = await res.json();
+      const parts = data.candidates?.[0]?.content?.parts || [];
+      return parts.map(p => p.text || "").join("").trim() || "(empty reply)";
+    }
+
+    throw new Error("Unknown provider");
+  }
+
+  async function callN8n({ text, cfg, signal }) {
+    const res = await fetch(cfg.webhook, {
+      method: "POST",
+      signal,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        agent: activeId,
+        message: text,
+        model: currentModel(),
+        temperature: cfg.temp,
+        systemPrompt: cfg.prompt
+      })
+    });
+    if (!res.ok) throw new Error("Webhook responded with " + res.status);
+    const data = await res.json();
+    return data.reply || data.output || data.message || JSON.stringify(data);
+  }
+
+  // Conversation sent to the model: skip the canned greeting and any error bubbles.
+  function buildHistory(agentId) {
+    return chatLogs[agentId]
+      .filter(m => !m.intro && !m.error)
+      .map(m => ({ role: m.role, text: m.text }));
+  }
+
+  let busy = false;
+
   async function sendMessage() {
     const text = msgInput.value.trim();
-    if (!text) return;
+    if (!text || busy) return;
 
-    chatLogs[activeId].push({ role: "user", text });
+    const agentId = activeId;
+
+    if (provider !== "n8n" && !apiKey()) {
+      chatLogs[agentId].push({ role: "user", text });
+      chatLogs[agentId].push({
+        role: "assistant",
+        error: true,
+        text: `Add your ${PROVIDERS[provider].label} API key in the Configuration panel on the right, then send again. Your key stays in this browser tab only.`
+      });
+      msgInput.value = "";
+      autosize();
+      renderThread();
+      apiKeyInput.focus();
+      return;
+    }
+
+    chatLogs[agentId].push({ role: "user", text });
     msgInput.value = "";
     autosize();
     renderThread();
+
+    busy = true;
+    sendBtn.disabled = true;
 
     // typing indicator
     const typingId = "typing-" + Date.now();
     threadEl.insertAdjacentHTML("beforeend", `
       <div class="msg assistant" id="${typingId}">
-        <span class="msg-avatar">${getAgent(activeId).initials}</span>
+        <span class="msg-avatar">${getAgent(agentId).initials}</span>
         <span class="bubble typing">
           <span class="typing-dots"><span></span><span></span><span></span></span>
         </span>
@@ -840,45 +1057,67 @@
     `);
     threadEl.scrollTop = threadEl.scrollHeight;
 
-    const cfg = overrides[activeId];
-    let replyText;
+    const cfg = overrides[agentId];
+    let reply;
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 60000);
 
     try {
-      const res = await fetch(cfg.webhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          agent: activeId,
-          message: text,
-          model: cfg.model,
-          temperature: cfg.temp,
-          systemPrompt: cfg.prompt
-        })
-      });
-
-      if (!res.ok) throw new Error("Webhook responded with " + res.status);
-      const data = await res.json();
-      replyText = data.reply || data.output || data.message || JSON.stringify(data);
-
+      const replyText = provider === "n8n"
+        ? await callN8n({ text, cfg, signal: controller.signal })
+        : await callProvider({
+            history: buildHistory(agentId),
+            system: cfg.prompt,
+            model: currentModel(),
+            temperature: cfg.temp,
+            signal: controller.signal
+          });
+      reply = { role: "assistant", text: replyText };
+      setStatus("ok", "Connected");
     } catch (err) {
-      replyText = "This is a prototype webhook (" + cfg.webhook + ") — it isn't connected yet, so this is a simulated reply. Once the real n8n workflow is live at this URL, responses will come from there instead.";
+      const msg = err.name === "AbortError" ? "Request timed out" : err.message;
+      reply = {
+        role: "assistant",
+        error: true,
+        text: provider === "n8n"
+          ? `Couldn't reach the webhook (${cfg.webhook}): ${msg}. Check the URL is a live production webhook with CORS allowed for this site.`
+          : `${PROVIDERS[provider].label} returned an error: ${msg}`
+      };
+      setStatus("err", "Error");
+    } finally {
+      clearTimeout(timer);
     }
 
     document.getElementById(typingId)?.remove();
-    chatLogs[activeId].push({ role: "assistant", text: replyText });
-    renderThread();
+    chatLogs[agentId].push(reply);
+    busy = false;
+    sendBtn.disabled = false;
+    if (agentId === activeId) renderThread();
   }
 
   // ---- config panel wiring ----
 
-  webhookInput.addEventListener("input", () => {
-    overrides[activeId].webhook = webhookInput.value.trim();
-    statusPill.className = "status-pill unknown";
-    statusPill.innerHTML = '<span class="pdot"></span>Not tested';
+  providerSelect.addEventListener("change", () => {
+    provider = providerSelect.value;
+    store.set("pc.provider", provider);
+    // model names differ per provider — reset to the provider's default
+    agents.forEach(a => { overrides[a.id].model = ""; });
+    renderConfig();
   });
 
-  modelSelect.addEventListener("change", () => {
-    overrides[activeId].model = modelSelect.value;
+  apiKeyInput.addEventListener("input", () => {
+    store.set("pc.key." + provider, apiKeyInput.value.trim());
+    setStatus("unknown", apiKeyInput.value.trim() ? "Not tested" : "Add a key");
+  });
+
+  webhookInput.addEventListener("input", () => {
+    overrides[activeId].webhook = webhookInput.value.trim();
+    setStatus("unknown", "Not tested");
+  });
+
+  modelSelect.addEventListener("input", () => {
+    overrides[activeId].model = modelSelect.value.trim();
   });
 
   tempRange.addEventListener("input", () => {
@@ -891,30 +1130,45 @@
   });
 
   testBtn.addEventListener("click", async () => {
-    const url = overrides[activeId].webhook;
-    testBtn.disabled = true;
-    statusPill.className = "status-pill unknown";
-    statusPill.innerHTML = '<span class="pdot"></span>Testing…';
-
-    try {
-      const controller = new AbortController();
-      const t = setTimeout(() => controller.abort(), 5000);
-      const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ping: true }), signal: controller.signal });
-      clearTimeout(t);
-
-      if (res.ok) {
-        statusPill.className = "status-pill ok";
-        statusPill.innerHTML = '<span class="pdot"></span>Connected';
-      } else {
-        statusPill.className = "status-pill err";
-        statusPill.innerHTML = '<span class="pdot"></span>Error ' + res.status;
-      }
-    } catch (err) {
-      statusPill.className = "status-pill err";
-      statusPill.innerHTML = '<span class="pdot"></span>Unreachable';
+    if (provider !== "n8n" && !apiKey()) {
+      setStatus("err", "Add a key");
+      apiKeyInput.focus();
+      return;
     }
 
-    testBtn.disabled = false;
+    testBtn.disabled = true;
+    setStatus("unknown", "Testing…");
+
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      if (provider === "n8n") {
+        const res = await fetch(overrides[activeId].webhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ping: true }),
+          signal: controller.signal
+        });
+        if (!res.ok) throw new Error("Error " + res.status);
+      } else {
+        await callProvider({
+          history: [{ role: "user", text: "Reply with the single word: OK" }],
+          system: "You are a connection test.",
+          model: currentModel(),
+          temperature: 0,
+          maxTokens: 16,
+          signal: controller.signal
+        });
+      }
+      setStatus("ok", "Connected");
+    } catch (err) {
+      setStatus("err", err.name === "AbortError" ? "Timed out" : "Failed");
+      statusPill.title = err.message;
+    } finally {
+      clearTimeout(t);
+      testBtn.disabled = false;
+    }
   });
 
   // ---- init ----
